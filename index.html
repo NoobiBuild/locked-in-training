@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCKED IN: Training - 8 Week Program</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTE9DS0VEIElOOiBUcmFpbmluZyIsInNob3J0X25hbWUiOiJMT0NLRUQgSU4iLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzFhMWExYSIsInRoZW1lX2NvbG9yIjoiIzAwZmY4OCIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeE1qZ2dNVEk0SWo0OGNtVmpkQ0IzYVdSMGFEMGlNVEk0SWlCb1pXbG5hSFE5SWpFeU9DSWdabWxzYkQwaUl6QXdabVk0T0NJdlBqd3ZjM1puUGc9PSIsInNpemVzIjoiMTI4eDEyOCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --surface: rgba(42, 42, 42, 0.8);
+            --surface-hover: rgba(52, 52, 52, 0.9);
+            --accent-green: #00ff88;
+            --accent-purple: #8B7E9E;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 255, 136, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Stats Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(139, 126, 158, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 8px 32px var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--accent-green);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Week Selector */
+        .week-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .week-pill {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .week-pill:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .week-pill.active {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-green));
+            border-color: var(--accent-green);
+            color: white;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .week-pill.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .week-pill.locked::after {
+            content: "🔒";
+            margin-left: 8px;
+        }
+
+        /* Day Cards */
+        .day-card {
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+
+        .day-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .day-header:hover {
+            background: var(--surface-hover);
+        }
+
+        .day-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .day-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-green);
+        }
+
+        .day-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .day-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .complete-check {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .complete-check.checked {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .complete-check.checked::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .day-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .day-card.expanded .day-content {
+            max-height: 2000px;
+        }
+
+        .day-body {
+            padding: 20px;
+        }
+
+        .bio-focus {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 3px solid var(--accent-green);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .video-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 12px;
+        }
+
+        .video-duration {
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .video-type {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Weight Tracking */
+        .weight-section {
+            background: rgba(139, 126, 158, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .weight-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .weight-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .weight-input-group label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .weight-input-group input {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .weight-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(139, 126, 158, 0.3);
+        }
+
+        .weight-suggestion {
+            grid-column: 1 / -1;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .btn {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-purple));
+            border-color: var(--accent-green);
+        }
+
+        /* Video Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border: 2px solid var(--accent-green);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.3);
+        }
+
+        .modal-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin: 15px 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #player {
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-modal {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .close-modal:hover {
+            border-color: var(--accent-green);
+        }
+
+        /* Unlock Modal */
+        .unlock-modal .modal-content {
+            max-width: 500px;
+        }
+
+        .unlock-code-input {
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .unlock-code-input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .weight-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔒 LOCKED IN</h1>
+            <p class="tagline">Training • 8 Week Dumbbell Program</p>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalWorkouts">0</div>
+                <div class="stat-label">Workouts Complete</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="currentWeekStat">Week 1</div>
+                <div class="stat-label">Current Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value"><span id="weekProgress">0</span>%</div>
+                <div class="stat-label">Week Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="streakStat">0</div>
+                <div class="stat-label">Day Streak 🔥</div>
+            </div>
+        </div>
+
+        <!-- Week Selector -->
+        <div class="week-selector" id="weekSelector"></div>
+
+        <!-- Day Cards -->
+        <div id="dayCardsContainer"></div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn" onclick="backupData()">💾 Backup Data</button>
+            <button class="btn" onclick="restoreData()">📥 Restore Data</button>
+            <button class="btn btn-primary" onclick="showUnlockModal()">🔓 Unlock Full Program</button>
+        </div>
+    </div>
+
+    <!-- Video Playback Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <h2 id="videoModalTitle">Now Playing</h2>
+            <div class="video-player-container">
+                <div id="player"></div>
+            </div>
+            <button class="close-modal" onclick="closeVideoModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Unlock Modal -->
+    <div class="modal unlock-modal" id="unlockModal">
+        <div class="modal-content">
+            <h2>🔓 Unlock Weeks 3-8</h2>
+            <p>Get the complete 8-week program for just $12</p>
+            <p><strong>Includes:</strong><br>6 additional weeks of progressive training<br>Smart weight suggestions<br>Lifetime access</p>
+            <a href="https://8241965896837.gumroad.com/l/locked-in-training" target="_blank" class="btn btn-primary" style="display: inline-block; text-decoration: none; margin-bottom: 20px;">Buy Now ($12)</a>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px;">Already purchased? Enter your unlock code:</p>
+            <input type="text" class="unlock-code-input" id="unlockCodeInput" placeholder="Enter Code">
+            <button class="btn btn-primary" onclick="unlockProgram()">Unlock</button>
+            <button class="btn" onclick="closeUnlockModal()" style="margin-top: 10px;">Close</button>
+        </div>
+    </div>
+
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        // ---------- Data Structure ----------
+        const workoutData = {
+            weeks: [
+                { number: 1, note: "Foundation" },
+                { number: 2, note: "Volume Increase" },
+                { number: 3, note: "Intensity Bump" },
+                { number: 4, note: "Deload" },
+                { number: 5, note: "Build Back Up" },
+                { number: 6, note: "Peak Volume" },
+                { number: 7, note: "Intensity Focus" },
+                { number: 8, note: "Test & Finish" }
+            ],
+            days: [
+                {
+                    number: 1,
+                    title: "Upper Push",
+                    subtitle: "Chest/Shoulders/Triceps",
+                    bioFocus: "Mechanical tension → muscle thickening",
+                    videos: [
+                        { duration: "20 Min", type: "Dumbbell", id: "x5qulwJMq1E" },
+                        { duration: "20 Min", type: "No Equipment", id: "0Yx_qbbzM0c" },
+                        { duration: "10 Min", type: "Quick", id: "WwsEXA2L4qc" },
+                        { duration: "20 Min", type: "Limited Space", id: "lmxmlao4Pdg" }
+                    ]
+                },
+                {
+                    number: 2,
+                    title: "Lower Quad‑Focus",
+                    subtitle: "Quads & Glutes",
+                    bioFocus: "Systemic hormone response, fat-loss support",
+                    videos: [
+                        { duration: "??", type: "Dumbbell", id: "cg8mzSgYAoY" },
+                        { duration: "20 Min", type: "No Equipment", id: "q7rCeOa_m58" },
+                        { duration: "20 Min", type: "Quick", id: "FeUGuTwg_7U" },
+                        { duration: "??", type: "Limited Space", id: "Q2cMMnUuKYQ" }
+                    ]
+                },
+                {
+                    number: 3,
+                    title: "Upper Pull",
+                    subtitle: "Back/Biceps",
+                    bioFocus: "Posture, spinal stability, upper-body density",
+                    videos: [
+                        { duration: "??", type: "Dumbbell", id: "I6zjFZ1DbBk" },
+                        { duration: "??", type: "No Equipment", id: "27vGJQtPw-U" },
+                        { duration: "15 Min", type: "Quick", id: "j-Wbu2HVU9A" },
+                        { duration: "??", type: "Limited Space", id: "fkJNvdZ3CbQ" }
+                    ]
+                },
+                {
+                    number: 4,
+                    title: "Lower Glute/Ham‑Focus",
+                    subtitle: "Glutes & Hamstrings",
+                    bioFocus: "Blood volume, capillary growth, muscle fullness",
+                    videos: [
+                        { duration: "??", type: "Dumbbell", id: "WNpKf7eIzqM" },
+                        { duration: "??", type: "No Equipment", id: "uvpnmAQa3m8" },
+                        { duration: "10 Min", type: "Quick", id: "uvpnmAQa3m8" },
+                        { duration: "??", type: "Limited Space", id: "X0xt0fYTZv8" }
+                    ]
+                },
+                {
+                    number: 5,
+                    title: "Metabolic + Core",
+                    subtitle: "Conditioning",
+                    bioFocus: "Fat mobilisation, cardiovascular efficiency",
+                    videos: [
+                        { duration: "30 Min", type: "Dumbbell", id: "xuSOB5QBwrY" },
+                        { duration: "??", type: "No Equipment", id: "Ij2NtOL66rU" },
+                        { duration: "15 Min", type: "Quick", id: "9wlr8x0Iukg" },
+                        { duration: "??", type: "Limited Space", id: "wri5U76ITV4" }
+                    ]
+                }
+            ]
+        };
+
+        // State Management
+        let appState = {
+            currentWeek: 1,
+            unlocked: false,
+            streak: 0,
+            completedDates: [],
+            completions: {},
+            weights: {}
+        };
+
+        // YouTube Player globals
+        let player;
+        let currentPlayingDay = null;
+        let videoModal = document.getElementById('videoModal');
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('lockedInState_v2');
+            if (saved) {
+                appState = { ...appState, ...JSON.parse(saved) };
+            }
+            calculateStreak();
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('lockedInState_v2', JSON.stringify(appState));
+        }
+
+        // Initialize App
+        function initApp() {
+            loadState();
+            renderWeekSelector();
+            renderDayCards();
+            updateStats();
+        }
+
+        // Update Stats Dashboard
+        function updateStats() {
+            const totalCompleted = Object.values(appState.completions).filter(Boolean).length;
+            document.getElementById('totalWorkouts').textContent = totalCompleted;
+            document.getElementById('currentWeekStat').textContent = `Week ${appState.currentWeek}`;
+
+            let weekComplete = 0;
+            for (let i = 1; i <= 5; i++) {
+                const key = `w${appState.currentWeek}_d${i}`;
+                if (appState.completions[key]) weekComplete++;
+            }
+            const percentage = Math.round((weekComplete / 5) * 100);
+            document.getElementById('weekProgress').textContent = percentage;
+            document.getElementById('streakStat').textContent = appState.streak;
+        }
+
+        // Render Week Selector
+        function renderWeekSelector() {
+            const container = document.getElementById('weekSelector');
+            container.innerHTML = workoutData.weeks.map(week => {
+                const isLocked = week.number > 2 && !appState.unlocked;
+                const isActive = week.number === appState.currentWeek;
+                return `
+                    <div class="week-pill ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}" 
+                         onclick="${isLocked ? 'showUnlockModal()' : `selectWeek(${week.number})`}">
+                        Week ${week.number} ${week.note ? '• ' + week.note : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Select Week
+        function selectWeek(weekNum) {
+            appState.currentWeek = weekNum;
+            saveState();
+            renderWeekSelector();
+            renderDayCards();
+            updateStats();
+        }
+
+        // Render Day Cards
+        function renderDayCards() {
+            const container = document.getElementById('dayCardsContainer');
+            container.innerHTML = workoutData.days.map(day => {
+                const completionKey = `w${appState.currentWeek}_d${day.number}`;
+                const isCompleted = appState.completions[completionKey] || false;
+                const usedWeight = appState.weights[completionKey] || '';
+
+                return `
+                    <div class="day-card" id="day${day.number}" data-day="${day.number}">
+                        <div class="day-header" onclick="toggleDay(${day.number})">
+                            <div class="day-title">
+                                <span class="day-number">DAY ${day.number}</span>
+                                <div>
+                                    <div class="day-name">${day.title}</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">${day.subtitle}</div>
+                                </div>
+                            </div>
+                            <div class="day-status">
+                                <div class="complete-check ${isCompleted ? 'checked' : ''}" 
+                                     onclick="event.stopPropagation(); toggleComplete(${day.number})"></div>
+                                <span class="expand-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="day-body">
+                                <div class="bio-focus">
+                                    <strong>💡 Bio Focus:</strong> ${day.bioFocus}
+                                </div>
+                                
+                                <div class="video-grid">
+                                    ${day.videos.map(video => `
+                                        <div class="video-card" onclick="playVideo('${video.id}', ${day.number}, '${video.type}')">
+                                            <img src="https://img.youtube.com/vi/${video.id}/mqdefault.jpg" 
+                                                 alt="${video.type}" class="video-thumbnail" loading="lazy">
+                                            <div class="video-info">
+                                                <div class="video-duration">${video.duration}</div>
+                                                <div class="video-type">${video.type}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+
+                                <div class="weight-section">
+                                    <strong style="color: var(--accent-purple);">⚖️ Weight Tracking</strong>
+                                    <div class="weight-inputs">
+                                        <div class="weight-input-group">
+                                            <label>Weight Used (kg)</label>
+                                            <input type="number" 
+                                                   value="${usedWeight}" 
+                                                   placeholder="Enter kg"
+                                                   onchange="updateWeight(${day.number}, this.value)">
+                                        </div>
+                                    </div>
+                                    ${getWeightSuggestion(usedWeight)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Weight suggestion
+        function getWeightSuggestion(usedWeight) {
+            if (!usedWeight) return '';
+            const w = parseFloat(usedWeight);
+            if (isNaN(w)) return '';
+            if (w > 10) return `<div class="weight-suggestion">💪 Strong! Keep pushing.</div>`;
+            if (w < 5) return `<div class="weight-suggestion">⚡ Great start! Aim to increase gradually.</div>`;
+            return `<div class="weight-suggestion">✓ Good weight for this phase.</div>`;
+        }
+
+        // Update Weight
+        function updateWeight(dayNum, weight) {
+            const key = `w${appState.currentWeek}_d${dayNum}`;
+            appState.weights[key] = weight;
+            saveState();
+            const card = document.getElementById(`day${dayNum}`);
+            if (card) {
+                const suggestionDiv = card.querySelector('.weight-suggestion');
+                const newSuggestion = getWeightSuggestion(weight);
+                if (suggestionDiv) {
+                    suggestionDiv.outerHTML = newSuggestion;
+                } else if (newSuggestion) {
+                    card.querySelector('.weight-inputs').insertAdjacentHTML('afterend', newSuggestion);
+                }
+            }
+        }
+
+        // Toggle Day Expansion
+        function toggleDay(dayNum) {
+            const card = document.getElementById(`day${dayNum}`);
+            card.classList.toggle('expanded');
+        }
+
+        // Toggle Completion
+        function toggleComplete(dayNum) {
+            const key = `w${appState.currentWeek}_d${dayNum}`;
+            const newStatus = !appState.completions[key];
+            appState.completions[key] = newStatus;
+
+            const today = new Date().toISOString().split('T')[0];
+            if (newStatus && !appState.completedDates.includes(today)) {
+                appState.completedDates.push(today);
+            }
+
+            saveState();
+            calculateStreak();
+            renderDayCards();
+            updateStats();
+        }
+
+        // Calculate Streak
+        function calculateStreak() {
+            if (!appState.completedDates || appState.completedDates.length === 0) {
+                appState.streak = 0;
+                return;
+            }
+
+            const sorted = [...appState.completedDates].sort().reverse();
+            let streak = 0;
+            let currentDate = new Date();
+            currentDate.setHours(0,0,0,0);
+
+            for (let i = 0; i < sorted.length; i++) {
+                const date = new Date(sorted[i] + 'T00:00:00');
+                const diffDays = Math.round((currentDate - date) / (1000*60*60*24));
+                
+                if (i === 0 && diffDays > 1) {
+                    streak = 0;
+                    break;
+                }
+                
+                if (i === 0) {
+                    streak = 1;
+                    currentDate = date;
+                } else {
+                    const prevDate = new Date(sorted[i-1] + 'T00:00:00');
+                    const expectedPrev = new Date(currentDate);
+                    expectedPrev.setDate(expectedPrev.getDate() - 1);
+                    if (date.toDateString() === expectedPrev.toDateString()) {
+                        streak++;
+                        currentDate = date;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            appState.streak = streak;
+        }
+
+        // ---------- YouTube Player Functions ----------
+        function playVideo(videoId, dayNum, videoType) {
+            currentPlayingDay = dayNum;
+            document.getElementById('videoModalTitle').textContent = `Day ${dayNum} - ${videoType}`;
+            videoModal.classList.add('active');
+
+            if (player && typeof player.loadVideoById === 'function') {
+                player.loadVideoById(videoId);
+            } else {
+                createPlayer(videoId);
+            }
+        }
+
+        function createPlayer(videoId) {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: {
+                    autoplay: 1,
+                    modestbranding: 1,
+                    rel: 0,
+                    enablejsapi: 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                if (currentPlayingDay) {
+                    markDayCompleted(currentPlayingDay);
+                }
+                setTimeout(closeVideoModal, 500);
+            }
+        }
+
+        function markDayCompleted(dayNum) {
+            const key = `w${appState.currentWeek}_d${dayNum}`;
+            if (!appState.completions[key]) {
+                appState.completions[key] = true;
+                const today = new Date().toISOString().split('T')[0];
+                if (!appState.completedDates.includes(today)) {
+                    appState.completedDates.push(today);
+                }
+                saveState();
+                calculateStreak();
+                renderDayCards();
+                updateStats();
+            }
+        }
+
+        function closeVideoModal() {
+            videoModal.classList.remove('active');
+            if (player && typeof player.stopVideo === 'function') {
+                player.stopVideo();
+            }
+            currentPlayingDay = null;
+        }
+
+        window.onYouTubeIframeAPIReady = function() {
+            // Player will be created when needed
+        };
+
+        // ---------- Backup / Restore / Unlock ----------
+        function backupData() {
+            const dataStr = JSON.stringify(appState, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `locked-in-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function restoreData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const restored = JSON.parse(event.target.result);
+                        appState = { ...appState, ...restored };
+                        saveState();
+                        initApp();
+                        alert('✓ Data restored successfully!');
+                    } catch (err) {
+                        alert('✗ Invalid backup file');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function showUnlockModal() {
+            document.getElementById('unlockModal').classList.add('active');
+        }
+
+        function closeUnlockModal() {
+            document.getElementById('unlockModal').classList.remove('active');
+        }
+
+        // Valid codes stored as SHA-256 hashes — never as plain text
+        // Codes: LOCKEDIN-PRO-2026 | LI-FULLACCESS-8WK | NOOBIBUILDS-2026
+        const VALID_CODE_HASHES = new Set([
+            'cdde858239e18b40ed412028f80d48135c762d56e1e36b071e2c55017c798cc0',
+            '9a72a8050015071ae92587f285cabaa86bc6b35eb9683be13c05a034f4f5bd58',
+            'b89b7d94b7f32abe2daba3698ef5bb8b604ccbf7c6195b6a24e1f03aad78273f'
+        ]);
+
+        async function hashCode(input) {
+            const encoded = new TextEncoder().encode(input);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+            return Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        function isRateLimited() {
+            const attempts = JSON.parse(localStorage.getItem('li_attempts') || '{"count":0,"since":0}');
+            const now = Date.now();
+            const windowMs = 10 * 60 * 1000; // 10-minute window
+
+            if (now - attempts.since > windowMs) {
+                // Window expired, reset
+                localStorage.setItem('li_attempts', JSON.stringify({ count: 0, since: now }));
+                return false;
+            }
+            return attempts.count >= 5;
+        }
+
+        function recordFailedAttempt() {
+            const attempts = JSON.parse(localStorage.getItem('li_attempts') || '{"count":0,"since":0}');
+            const now = Date.now();
+            const windowMs = 10 * 60 * 1000;
+
+            if (now - attempts.since > windowMs) {
+                localStorage.setItem('li_attempts', JSON.stringify({ count: 1, since: now }));
+            } else {
+                localStorage.setItem('li_attempts', JSON.stringify({ count: attempts.count + 1, since: attempts.since }));
+            }
+        }
+
+        function clearAttempts() {
+            localStorage.removeItem('li_attempts');
+        }
+
+        async function unlockProgram() {
+            if (isRateLimited()) {
+                alert('⛔ Too many attempts. Please wait 10 minutes and try again.');
+                return;
+            }
+
+            const raw = document.getElementById('unlockCodeInput').value.trim().toUpperCase();
+            if (!raw) {
+                alert('Please enter your unlock code.');
+                return;
+            }
+
+            const hashed = await hashCode(raw);
+
+            if (VALID_CODE_HASHES.has(hashed)) {
+                clearAttempts();
+                appState.unlocked = true;
+                saveState();
+                closeUnlockModal();
+                renderWeekSelector();
+                alert('🎉 Full program unlocked! Welcome to weeks 3-8!');
+            } else {
+                recordFailedAttempt();
+                const attempts = JSON.parse(localStorage.getItem('li_attempts') || '{"count":0}');
+                const remaining = Math.max(0, 5 - attempts.count);
+                alert(`✗ Invalid unlock code. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining before temporary lockout.`);
+            }
+        }
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('SW registration failed: ', err));
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
