@@ -1,8 +1,8 @@
 # Locked In — training progress in the browser
 
-A small training companion from [NoobiBuilds](https://www.noobibuilds.co.za/). It brings a multi-week programme, workout videos and progress tracking into one browser interface.
+A small training companion from [NoobiBuilds](https://noobibuilds.co.za/). It brings a multi-week programme, workout videos and progress tracking into one browser interface.
 
-This repository is an early implementation, shared as a source example. It is not presented as a production-readiness assessment or a validated fitness programme.
+This repository is an early implementation, shared as a source example. The [current website app](https://noobibuilds.co.za/Products/locked-in/) is a different build; this repository is not its current source release. It is not presented as a production-readiness assessment or a validated fitness programme.
 
 ## What the code contains
 
@@ -13,7 +13,7 @@ This repository is an early implementation, shared as a source example. It is no
 - JSON backup and restore.
 - A service worker for caching selected resources.
 
-The implementation is plain HTML, CSS and JavaScript. The main application lives in [index.html](index.html); the caching code is in [sw.js](sw.js). There is also an older duplicate application entry point in `locked-in-app/`. Use the repository root for the walkthrough below.
+The implementation is plain HTML, CSS and JavaScript. The main application lives in [index.html](index.html); the caching code is in [sw.js](sw.js). There is also an older duplicate application entry point in `locked-in-app/`. That copy needs a reference and deployment check before any removal. Use the repository root for the walkthrough below.
 
 ## Inspect it locally
 
@@ -25,7 +25,7 @@ python -m http.server 8000 --bind 127.0.0.1
 
 Then visit http://127.0.0.1:8000/. No package installation or build step is required by the current files.
 
-These instructions follow the static file structure. They have not yet been verified in a fresh runtime as part of the portfolio review. Internet access is needed for YouTube playback and external resources.
+On 25 September 2026, this entry point was served locally with Python 3 in an isolated browser. A synthetic weight entry survived reload after leaving the input field, and JSON backup export contained that value. This was a limited smoke check, not a full application test. Internet access is needed for YouTube playback and external resources.
 
 ## A useful walkthrough
 
@@ -56,4 +56,4 @@ The next useful improvements are a verified walkthrough, clearer restore validat
 
 ## Status and reuse
 
-Documentation reviewed on 24 September 2026. Runtime reliability, adoption and fitness outcomes have not been established by this repository review. No automated test suite or licence file was present at that review. Public availability should not be interpreted as permission to redistribute; contact the owner about reuse.
+Documentation reviewed on 25 September 2026. Local startup, weight persistence and backup export were smoke-checked against the earlier public source. Restore displayed a success message, but final state comparison was interrupted by a browser-automation file-chooser issue. Cross-profile restore, malformed imports, workout completion, cache updates and offline operation remain unverified. Runtime reliability, adoption and fitness outcomes have not been established by this review. No automated test suite or licence file was present at that review. Public availability should not be interpreted as permission to redistribute; contact the owner about reuse.
